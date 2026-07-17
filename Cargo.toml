@@ -3,7 +3,9 @@ name = "x1-mk1-usb2midi"
 version = "1.3.1"
 edition = "2021"
 description = "Converts X1 Mk1 USB events to MIDI"
-
+authors = ["Opa-", "opa-@github.com"]
+repository = "https://github.com/Opa-/x1-mk1-usb2midi"
+license = "Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

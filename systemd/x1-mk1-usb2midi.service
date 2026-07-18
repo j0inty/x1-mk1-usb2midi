@@ -1,0 +1,22 @@
+[Unit]
+Description=Traktor Kontrol X1 MK1 USB to MIDI
+After=default.target
+
+ConditionGroup=input
+
+[Service]
+Type=simple
+
+StandardOutput=journal
+StandardError=journal
+
+Environment=RUST_BACKTRACE=full
+
+WorkingDirectory=/home/%u/workspace/github.com/%N
+ExecStart=/home/%u/workspace/github.com/%N/target/release/%N
+
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

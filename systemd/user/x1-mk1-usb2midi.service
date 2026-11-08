@@ -2,6 +2,13 @@
 Description=Traktor Kontrol X1 MK1 USB to MIDI
 After=default.target
 
+# 1.1. Creating an udev rule to unbind the snd-usb-caiaq module from the traktor X1 MK1
+# echo "SUBSYSTEMS==\"usb\", ATTRS{idVendor}==\"17cc\", ATTRS{idProduct}==\"2305\", ACTION==\"add\", DRIVER==\"snd-usb-caiaq\", MODE:=\"0666\", RUN+=\"/bin/sh -c 'echo \$kernel > /sys/bus/usb/drivers/snd-usb-caiaq/unbind'\"" | sudo tee /etc/udev/rules.d/99-traktor-x1-mk1.rules
+
+# 1.2. Another way is to blacklist the snd-usb-caiaq module.
+#echo "blacklist snd_usb_caiaq" | sudo tee /etc/modprobe.d/snd-usb-caiaq.conf
+
+# Let check is the service user a member of the 'input' group.
 ConditionGroup=input
 
 [Service]
@@ -12,8 +19,9 @@ StandardError=journal
 
 Environment=RUST_BACKTRACE=full
 
-WorkingDirectory=/home/%u/workspace/github.com/%N
-ExecStart=/home/%u/workspace/github.com/%N/target/release/%N
+WorkingDirectory=/home/%u/workspace/github.com/%p
+ExecStartPre=/usr/bin/cargo build --release
+ExecStart=/home/%u/workspace/github.com/%p/target/release/%p
 
 Restart=on-failure
 RestartSec=10
